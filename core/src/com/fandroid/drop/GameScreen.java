@@ -33,6 +33,7 @@ public class GameScreen implements Screen {
 	Array<Rectangle> raidrops;
 	long lastDropTime;
 	int dropGatchered;
+	Texture background;
 
 
 	public  GameScreen (final Drop gam) {
@@ -46,6 +47,7 @@ public class GameScreen implements Screen {
 		batch = new SpriteBatch();
 		dropImage = new Texture("droplet.png");
 		bucketImage = new Texture("bucket.png");
+		background = new Texture("bg.jpg");
 
 		dropSound = Gdx.audio.newSound(Gdx.files.internal("waterdrop.wav"));
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("undertreeinrain.mp3"));
@@ -65,6 +67,8 @@ public class GameScreen implements Screen {
 	}
 
 
+
+
 	public void spawnRaindrop() {
 		Rectangle raindrop = new Rectangle();
 		raindrop.x = MathUtils.random(0, 800 -64);
@@ -73,9 +77,6 @@ public class GameScreen implements Screen {
 		raindrop.height = 64;
 		raidrops.add(raindrop);
 		lastDropTime = TimeUtils.nanoTime();
-
-
-
 
 	}
 
@@ -88,6 +89,7 @@ public class GameScreen implements Screen {
 
 		game.batch.setProjectionMatrix(camera.combined);
 		game.batch.begin();
+		game.batch.draw(background, 0, 0, 800, 480); // отрисовываем фон
 		game.font.draw(game.batch, "Drops collected: " + dropGatchered, 0, 480);
 		game.batch.draw(bucketImage, bucket.x, bucket.y);
 		for (Rectangle raindrop : raidrops) {
